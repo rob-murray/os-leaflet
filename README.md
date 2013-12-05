@@ -20,6 +20,9 @@ This repository contains the following sections:
 1. src - this contains the source.
 2. demo - this contains a simple demo to show the functionality
 
+Coming soon: [demo](http://rob-murray.github.io/os-leaflet/)
+
+
 ## Getting started
 
 ### Dependencies
