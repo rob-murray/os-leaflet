@@ -1,108 +1,139 @@
-L.TileLayer.OS = L.TileLayer.WMS.extend({
 
+/**
+ * A custom Layer for Ordnance Survey OpenSpace service.
+ *
+ * Note: An API key is needed, see OS website for details
+ */
+L.TileLayer.OSOpenSpace = L.TileLayer.WMS.extend({
+
+    /**
+     * Standard WMS params, specific for OpenSpace service
+     */
     defaultWmsParams: {
         SERVICE: 'WMS',
         REQUEST: 'GetMap',
         VERSION: '1.1.1',
         FORMAT: 'image/png'
     },
-        
-    defOptions: {
-        maxZoom: 13,
-        minZoom: 1,
+
+    /**
+     * Options specifically required by this layer.
+     * These can be overridden but things may not work
+     */
+    defaultLayerOptions: {
+        maxZoom: null,
+        minZoom: 0,
         continuousWorld: true,
+        worldCopyJump: false,
         tms: true,
-        attribution: " && OS.Openspace"
-        },
-    resolutions: [2500, 1000, 500, 200, 100, 50, 25, 10, 5, 4, 2.5, 2, 1],
+        attribution: " OS.OpenSpace",
+    },
+
+    /**
+     * The tile resolutions available here
+     * In metres per pixel
+     */
+    resolutions: [2500, 1000, 500, 200, 100, 50, 25, 10, 5, 2.5],
+    
+    /**
+     * The URL of the OS OpenSpace (Free) tile server
+     */
     _url: "http://openspace.ordnancesurvey.co.uk/osmapapi/ts",
 
-	initialize: function (apiKey, options) { // (String, Object)
-	
-	    this.options.tileSize = options.tileSize;//this should be calculated from the zoom but not in the init fn
+    /**
+     * The spec for the OS products available here in the format
+     * ProductName: [resolution (mpp), tile size (pixels)]
+     */
+    tileResolutions: {
+        "VMD": [2.5, 200],
+        "50K": [5.0, 200],
+        "50KR": [10.0, 200],
+        "250K": [25.0, 200],
+        "250KR": [50.0, 200],
+        "MS": [100.0, 200],
+        "MSR": [200.0, 200],
+        "OV2": [500.0, 200],
+        "OV1": [1000.0, 200],
+        "OV0": [2500.0, 200]
+    },
 
-		var wmsParams = L.Util.extend({}, this.defaultWmsParams);
-
-                //Create obj for the API key
-                var newparams = {
-                    "KEY": apiKey
-                };
-                
-                wmsParams = L.Util.extend(wmsParams, newparams);
-
-                //TODO: escape chars- why doesnt leaflet do it?!
-		for (var i in options) {
-			// all keys that are not TileLayer options go to WMS params
-			if (!this.options.hasOwnProperty(i)) {
-				wmsParams[i] = options[i];
-			}
-		}
-
-		this.wmsParams = wmsParams;
-
-		L.Util.setOptions(this, this.defOptions);
-	},
-	
-	
-	//TODO: doc
-	setOsTileSize: function (sizeInt){
-	    console.log('>> setting tilesize: ',sizeInt);
-	    this.options.tileSize = sizeInt;
-	},
-	//TODO: doc
-	getCurrentLayerTileSize: function(){
-        var zoom = this._map.getZoom();
-        var res = resolutions[z-1];
-        var tileSize = (res < 5 && res !== 2.5) ?  250 : 200;
-        return tileSize;
-	},
+    /**
+     * Set whether to output some logging.
+     * Set true to turn on, false otherwise
+     */
+    debug: true,
 
 
-	getTileUrl: function (tilePoint) { // (Point) -> String
-            
-        console.log('>> tilePoint: ',tilePoint.toString());
+    /**
+     * Create new instance of `L.TileLayer.OSOpenSpace`
+     * Inject custom properties into request params
+     *
+     * @override
+     */
+    initialize: function (apiKey, options) { // (String, Object)
 
-		var map = this._map;
-        var crs = map.options.crs;
-                
-                
-        var zoom = map.getZoom();
-        console.log('>> zoom: ',zoom);
+        var authParams = {
+            "KEY": apiKey,
+            "URL": "file:///"
+        };
 
-        var res = this.resolutions[zoom-1];
-        console.log('>> res: ',res);
-                
-        var tileSize = this.options.tileSize;
-        //this.options.tileSize = map.options.tileSize;//this needs to be set after a zoom event
+        this.defaultLayerOptions.maxZoom = this.resolutions.length - 1;        
 
+        this.options.tileSize = 200;
 
-        var nwPoint = tilePoint.multiplyBy(tileSize);
-        var sePoint = nwPoint.add(new L.Point(tileSize, tileSize));
-                
-                
-console.log(">> tileSize: ",tileSize);            
-                
-console.log(">> NW_Point: ",nwPoint.toString());
-console.log(">> SE_Point: ",sePoint.toString());
+        var wmsParams = L.extend(authParams, this.defaultWmsParams),
+            tileSize = options.tileSize || this.options.tileSize;
 
-		var nw = crs.project( map.unproject(nwPoint, zoom) );
-		var se = crs.project( map.unproject(sePoint, zoom) );
-                
-console.log(">> nw: ",map.unproject(nwPoint, zoom, true).toString());
-console.log(">> NW: ",nw.toString());
+        wmsParams.width = wmsParams.height = 200;
 
-		var bbox = [nw.x, se.y, se.x, nw.y].join(',');
-        console.log(">> bbox: ",bbox);
+        for (var i in options) {
+            // all keys that are not TileLayer options go to WMS params
+            if (!this.options.hasOwnProperty(i) && i !== 'crs') {
+                wmsParams[i] = options[i];
+            }
+        }
 
+        this.wmsParams = wmsParams;
 
-		var url = L.Util.template(this._url, {});//TODO find out what this specifically does
+        L.setOptions(this, this.defaultLayerOptions);
+    },    
 
-		return url + L.Util.getParamString(this.wmsParams) + "&BBOX=" + bbox + '&WIDTH=' + tileSize + '&HEIGHT=' +tileSize + '&LAYERS='+res;
-	}
+    /**
+     * Return a url for this tile.
+     * Calculate the bbox for the tilePoint and format the wms request
+     *
+     * @override
+     */
+    getTileUrl: function (tilePoint) { // (Point, Number) -> String
 
+        if (this.debug) console.log('>>tilePoint: ',tilePoint.toString());
+
+        var map = this._map,
+            tileSizePixels = this.options.tileSize,
+            crs = map.options.crs,
+            zoom = tilePoint.z,
+            resolutionMpp = this.resolutions[zoom],
+            tileSizeMetres = tileSizePixels * resolutionMpp;
+
+        /* tilePoint appears to be topLeft in this config */
+        var tileBboxX0 = tileSizeMetres * tilePoint.x;   
+        var tileBboxY0 = (tileSizeMetres * tilePoint.y) - tileSizeMetres;
+
+        if (this.debug) console.log(">>tileSizePixels: "+tileSizePixels+", zoom: "+zoom+", resolutionMpp: "+resolutionMpp+", tileSizeMetres: "+tileSizeMetres);
+
+        /* service is a tile based wms format and only requires x0,y0 */
+        var bbox = [tileBboxX0, tileBboxY0, 0, 0].join(',');
+
+        var url = L.Util.template(this._url, {});
+
+        if (this.debug) console.log(">>Bbox: ",bbox);
+
+        return url + L.Util.getParamString(this.wmsParams) + "&BBOX=" + bbox + '&WIDTH=' + tileSizePixels + '&HEIGHT=' +tileSizePixels + '&LAYERS='+resolutionMpp;
+    
+    }
 
 });
 
-L.tileLayer.os = function (url, options) {
-	return new L.TileLayer.OS(url, options);
+L.tileLayer.osopenspace = function (apiKey, options) {
+    return new L.TileLayer.OSOpenSpace(apiKey, options);
 };
