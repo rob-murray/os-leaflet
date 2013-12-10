@@ -6,18 +6,18 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7/leaflet.css" />
+  <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.1/leaflet.css" />
 
 </head>
 <body>
   <h2>Leaflet - OS Openspace Example</h2>
-  <div id="map" style="width: 600px; height: 400px; border: 1px solid black;"></div>
+  <div id="map" style="width: 600px; height: 475px; border: 1px solid black;"></div>
 
   
 
   <!-- dependencies -->
   <!-- we're tied to specific versions of Proj4Leaflet and its dependency on Proj4js-->
-  <script src="http://cdn.leafletjs.com/leaflet-0.7/leaflet.js"></script>
+  <script src="http://cdn.leafletjs.com/leaflet-0.7.1/leaflet.js"></script>
   <script src="https://rawgithub.com/kartena/Proj4Leaflet/master/lib/proj4-compressed.js"></script><!-- proj4js -->
   <script src="https://rawgithub.com/kartena/Proj4Leaflet/master/src/proj4leaflet.js"></script><!-- proj4leaflet -->
   <script src="https://rawgithub.com/rob-murray/os-leaflet/master/src/openspace.js"></script><!-- OS layer -->
@@ -31,49 +31,26 @@
     
     function init() { 
 
-/*
-* proj => minx, miny -> 1393.0196, 13494.9764  
-*   max-x, max-y -> 671196.3657, 1230275.0454
-*   xmin-7.5600, ymin49.9600, xmax1.7800, ymax60.8400
-*   0,0,700000,1300000
-*/
-      var OSGB36 = {
-        EPSG:  'EPSG:27700',
-        DEF: '+proj=tmerc +lat_0=49 +lon_0=-2 +k=0.9996012717 +x_0=400000 +y_0=-100000' + 
-        '+ellps=airy +datum=OSGB36 +units=m +no_defs',
-        EXTENT: [1393.0196, 13494.9764, 671196.3657, 1230275.0454],
-        PROJ_EXTENT: [0, 0, 700000, 1300000]
-      };
-
+      /* example point */
       var OSHQ = {
         WGS84: [50.936715, -1.4701989],
         OSGB: [437324, 115386]
       };
 
-      var resolutions = [2500, 1000, 500, 200, 100, 50, 25, 10, 5, 2.5];
+      /* L.Map with OS options */
+      var map = new L.Map('map', {
+        crs: L.TileLayer.OSOpenSpace.getCRS(),
+        continuousWorld: true,
+        worldCopyJump: false,
+        minZoom: 0,
+        maxZoom: L.TileLayer.OSOpenSpace.RESOLUTIONS.length - 1,
+      });
 
-    var osgb36crs = new L.Proj.CRS( OSGB36.EPSG, OSGB36.DEF,
-      {
-        resolutions: resolutions,
-        //origin: [0, 0],
-        bounds: L.bounds([OSGB36.PROJ_EXTENT[0], OSGB36.PROJ_EXTENT[3]], [OSGB36.PROJ_EXTENT[2], OSGB36.PROJ_EXTENT[1]])
-        }
-    );
+      /* New L.TileLayer.OSOpenSpace with API Key */
+      var openspaceLayer = L.tileLayer.osopenspace("EC9EDE7DAD732ABAE0430C6CA40AB812", {}); 
 
-     var map = new L.Map('map', {
-       crs: osgb36crs,
-       continuousWorld: true,
-       worldCopyJump: false,
-         minZoom: 0,
-         maxZoom: resolutions.length - 1,
-     });
-
-
-    var openspaceLayer = L.tileLayer.osopenspace("EC9EDE7DAD732ABAE0430C6CA40AB812", {}); 
-
-    map.addLayer(openspaceLayer);
-
-    map.setView(OSHQ.WGS84, 2);
+      map.addLayer(openspaceLayer);
+      map.setView(OSHQ.WGS84, 1);
 
 /* Not... quite... working...
 
