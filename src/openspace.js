@@ -41,7 +41,7 @@ L.TileLayer.OSOpenSpace = L.TileLayer.WMS.extend({
          * Return a {L.Proj.CRS} configured to EPSG:27700 for this Tile layer.
          *
          */
-        GET_CRS: function(){
+        getCRS: function(){
 
             if (typeof window.L === 'undefined' || typeof window.proj4 === 'undefined') {
                 throw 'Leaflet & Proj4js libraries must be included before OSOpenSpace layer';

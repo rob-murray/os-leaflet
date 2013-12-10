@@ -48,7 +48,7 @@ To use the Layer in your map just get the `L.Proj.CRS` - Coordinate Reference Sy
 
 ```javascript
 
-var osgbCrs = L.TileLayer.OSOpenSpace.GET_CRS();
+var osgbCrs = L.TileLayer.OSOpenSpace.getCRS();
 
 ```
 
@@ -56,7 +56,7 @@ Create a `L.Map` as normal but specify the `L.Proj.CRS` created above and set Le
 
 ```javascript
 var map = new L.Map('map', {
-    crs: L.TileLayer.OSOpenSpace.GET_CRS(),
+    crs: osgbCrs,
     continuousWorld: true,
     worldCopyJump: false,
     minZoom: 0,
