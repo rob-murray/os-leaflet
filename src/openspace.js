@@ -1,13 +1,67 @@
 
 /**
  * A custom Layer for Ordnance Survey OpenSpace service.
+ *  Note: An API key is needed, see OS website for details
  *
- * Note: An API key is needed, see OS website for details
+ * https://github.com/rob-murray/os-leaflet
+ *
  */
 L.TileLayer.OSOpenSpace = L.TileLayer.WMS.extend({
 
     /**
-     * Standard WMS params, specific for OpenSpace service
+     * Define some static fields; help out developers & encapsulate
+     *  boilerplate code.
+     */
+    statics: {
+
+        /**
+         * The tile resolutions available here.
+         *  In metres per pixel
+         */
+        RESOLUTIONS: [2500, 1000, 500, 200, 100, 50, 25, 10, 5, 2.5],
+
+        /**
+         * The OSGB36 datum Proj4 def & auxiliary data.
+         *
+         * proj => minx, miny -> 1393.0196, 13494.9764  
+         *   max-x, max-y -> 671196.3657, 1230275.0454
+         *   xmin-7.5600, ymin49.9600, xmax1.7800, ymax60.8400
+         *   0,0,700000,1300000
+         *
+         */
+        _OSGB36: {
+            EPSG:  'EPSG:27700',
+            DEF: '+proj=tmerc +lat_0=49 +lon_0=-2 +k=0.9996012717 +x_0=400000 +y_0=-100000' + 
+            '+ellps=airy +datum=OSGB36 +units=m +no_defs',
+            EXTENT: [1393.0196, 13494.9764, 671196.3657, 1230275.0454],
+            PROJ_EXTENT: [0, 0, 700000, 1300000]
+        },
+
+        /**
+         * Return a {L.Proj.CRS} configured to EPSG:27700 for this Tile layer.
+         *
+         */
+        GET_CRS: function(){
+
+            if (typeof window.L === 'undefined' || typeof window.proj4 === 'undefined') {
+                throw 'Leaflet & Proj4js libraries must be included before OSOpenSpace layer';
+            }
+
+            var klass = L.TileLayer.OSOpenSpace;
+            var osgb36crs = new L.Proj.CRS( klass._OSGB36.EPSG, klass._OSGB36.DEF,
+              {
+                resolutions: klass.RESOLUTIONS,
+                //origin: [0, 0],
+                bounds: L.bounds([klass._OSGB36.PROJ_EXTENT[0], klass._OSGB36.PROJ_EXTENT[3]], [klass._OSGB36.PROJ_EXTENT[2], klass._OSGB36.PROJ_EXTENT[1]])
+                }
+            );
+            return osgb36crs;
+        }
+            
+    },
+
+    /**
+     * Standard WMS params, specific for OpenSpace service.
      */
     defaultWmsParams: {
         SERVICE: 'WMS',
@@ -30,10 +84,10 @@ L.TileLayer.OSOpenSpace = L.TileLayer.WMS.extend({
     },
 
     /**
-     * The tile resolutions available here
+     * The tile resolutions available here; populated at runtime
      * In metres per pixel
      */
-    resolutions: [2500, 1000, 500, 200, 100, 50, 25, 10, 5, 2.5],
+    resolutions: [],
     
     /**
      * The URL of the OS OpenSpace (Free) tile server
@@ -43,7 +97,11 @@ L.TileLayer.OSOpenSpace = L.TileLayer.WMS.extend({
     /**
      * The spec for the OS products available here in the format
      * ProductName: [resolution (mpp), tile size (pixels)]
-     */
+     * Not used at present, for info.
+     * 
+     * For more details see http://www.ordnancesurvey.co.uk/business-and-government/help-and-support/web-services/os-ondemand/configuring-wmts.html
+     *
+     
     tileResolutions: {
         "VMD": [2.5, 200],
         "50K": [5.0, 200],
@@ -55,13 +113,13 @@ L.TileLayer.OSOpenSpace = L.TileLayer.WMS.extend({
         "OV2": [500.0, 200],
         "OV1": [1000.0, 200],
         "OV0": [2500.0, 200]
-    },
+    },*/
 
     /**
      * Set whether to output some logging.
      * Set true to turn on, false otherwise
      */
-    debug: true,
+    debug: false,
 
 
     /**
@@ -76,10 +134,10 @@ L.TileLayer.OSOpenSpace = L.TileLayer.WMS.extend({
             "KEY": apiKey,
             "URL": "file:///"
         };
-
-        this.defaultLayerOptions.maxZoom = this.resolutions.length - 1;        
-
+               
         this.options.tileSize = 200;
+        this.resolutions = L.TileLayer.OSOpenSpace.RESOLUTIONS;
+        this.defaultLayerOptions.maxZoom = L.TileLayer.OSOpenSpace.RESOLUTIONS.length - 1; 
 
         var wmsParams = L.extend(authParams, this.defaultWmsParams),
             tileSize = options.tileSize || this.options.tileSize;
@@ -134,6 +192,7 @@ L.TileLayer.OSOpenSpace = L.TileLayer.WMS.extend({
 
 });
 
+/* factory */
 L.tileLayer.osopenspace = function (apiKey, options) {
     return new L.TileLayer.OSOpenSpace(apiKey, options);
 };
