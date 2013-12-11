@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Leaflet - OS Openspace Example</title>
+  <title>Leaflet - OS OpenSpace Example</title>
   <meta charset="utf-8" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,7 +10,7 @@
 
 </head>
 <body>
-  <h2>Leaflet - OS Openspace Example</h2>
+  <h2>Leaflet - OS OpenSpace Example</h2>
   <div id="map" style="width: 600px; height: 475px; border: 1px solid black;"></div>
 
   
@@ -39,11 +39,11 @@
 
       /* L.Map with OS options */
       var map = new L.Map('map', {
-        crs: L.TileLayer.OSOpenSpace.getCRS(),
+        crs: L.OSOpenSpace.getCRS(),
         continuousWorld: true,
         worldCopyJump: false,
         minZoom: 0,
-        maxZoom: L.TileLayer.OSOpenSpace.RESOLUTIONS.length - 1,
+        maxZoom: L.OSOpenSpace.RESOLUTIONS.length - 1,
       });
 
       /* New L.TileLayer.OSOpenSpace with API Key */
