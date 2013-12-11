@@ -1,12 +1,11 @@
 
 /**
- * A custom Layer for Ordnance Survey OpenSpace service.
- *  Note: An API key is needed, see OS website for details
+ * os-leaflet ; A [Leafletjs](http://leafletjs.com/) TileLayer to display Ordnance Survey 
+ *       data in your Leaflet map via the OS OpenSpace web map service.
  *
  * https://github.com/rob-murray/os-leaflet
- *
  */
-L.TileLayer.OSOpenSpace = L.TileLayer.WMS.extend({
+L.OSOpenSpace = L.Class.extend({
 
     /**
      * Define some static fields; help out developers & encapsulate
@@ -16,7 +15,8 @@ L.TileLayer.OSOpenSpace = L.TileLayer.WMS.extend({
 
         /**
          * The tile resolutions available here.
-         *  In metres per pixel
+         *  In metres per pixel.
+         * {Array}
          */
         RESOLUTIONS: [2500, 1000, 500, 200, 100, 50, 25, 10, 5, 2.5],
 
@@ -27,7 +27,7 @@ L.TileLayer.OSOpenSpace = L.TileLayer.WMS.extend({
          *   max-x, max-y -> 671196.3657, 1230275.0454
          *   xmin-7.5600, ymin49.9600, xmax1.7800, ymax60.8400
          *   0,0,700000,1300000
-         *
+         * {Object}
          */
         _OSGB36: {
             EPSG:  'EPSG:27700',
@@ -38,8 +38,8 @@ L.TileLayer.OSOpenSpace = L.TileLayer.WMS.extend({
         },
 
         /**
-         * Return a {L.Proj.CRS} configured to EPSG:27700 for this Tile layer.
-         *
+         * Return a {L.Proj.CRS} configured to EPSG:27700 for the OpenSpace Tile layer.
+         * {L.Proj.CRS}
          */
         getCRS: function(){
 
@@ -47,7 +47,7 @@ L.TileLayer.OSOpenSpace = L.TileLayer.WMS.extend({
                 throw 'Leaflet & Proj4js libraries must be included before OSOpenSpace layer';
             }
 
-            var klass = L.TileLayer.OSOpenSpace;
+            var klass = L.OSOpenSpace;
             var osgb36crs = new L.Proj.CRS( klass._OSGB36.EPSG, klass._OSGB36.DEF,
               {
                 resolutions: klass.RESOLUTIONS,
@@ -58,7 +58,17 @@ L.TileLayer.OSOpenSpace = L.TileLayer.WMS.extend({
             return osgb36crs;
         }
             
-    },
+    }    
+
+
+});
+
+/**
+ * A custom Layer for Ordnance Survey OpenSpace service.
+ *  Note: An API key is needed, see OS website for details
+ *
+ */
+L.TileLayer.OSOpenSpace = L.TileLayer.WMS.extend({
 
     /**
      * Standard WMS params, specific for OpenSpace service.
@@ -136,8 +146,8 @@ L.TileLayer.OSOpenSpace = L.TileLayer.WMS.extend({
         };
                
         this.options.tileSize = 200;
-        this.resolutions = L.TileLayer.OSOpenSpace.RESOLUTIONS;
-        this.defaultLayerOptions.maxZoom = L.TileLayer.OSOpenSpace.RESOLUTIONS.length - 1; 
+        this.resolutions = L.OSOpenSpace.RESOLUTIONS;
+        this.defaultLayerOptions.maxZoom = L.OSOpenSpace.RESOLUTIONS.length - 1; 
 
         var wmsParams = L.extend(authParams, this.defaultWmsParams),
             tileSize = options.tileSize || this.options.tileSize;

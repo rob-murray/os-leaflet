@@ -1,11 +1,12 @@
 os-leaflet
 ==========
 
-A Leaflet TileLayer utilising Ordnance Survey Openspace web map service
+A [Leafletjs](http://leafletjs.com/) TileLayer to display Ordnance Survey map data in your Leaflet map via the OS OpenSpace web map service.
+ 
 
 ## Description
 
-This is a new [Leafletjs](http://leafletjs.com/) TileLayer utilising Ordnance Survey Openspace web map service.
+This is a new `L.TileLayer` that can be used to easily get Ordnance Survey products into a Leaflet map.
 
 !! This service requires an API KEY - @see http://www.ordnancesurvey.co.uk/oswebsite/web-services/os-openspace/
 
@@ -18,13 +19,13 @@ This layer uses the OS Openspace Free service and the mapstack is defined for th
 
 This repository contains the following sections:
 
-1. src - this contains the source.
-2. [demo](http://rob-murray.github.io/os-leaflet/) - this contains a simple demo to show the functionality
+1. `src` - This contains the source code to the `L.TileLayer.OSOpenSpace`.
+2. [demo](http://rob-murray.github.io/os-leaflet/) - A simple demo to show off the functionality.
 
 
 ## Getting started
 
-Beware; this is experimental and not production ready.
+!Beware; this is experimental and not production ready.
 
 
 ### Dependencies
@@ -48,7 +49,7 @@ To use the Layer in your map just get the `L.Proj.CRS` - Coordinate Reference Sy
 
 ```javascript
 
-var osgbCrs = L.TileLayer.OSOpenSpace.getCRS();
+var osgbCrs = L.OSOpenSpace.getCRS();
 
 ```
 
@@ -60,7 +61,7 @@ var map = new L.Map('map', {
     continuousWorld: true,
     worldCopyJump: false,
     minZoom: 0,
-    maxZoom: L.TileLayer.OSOpenSpace.RESOLUTIONS.length - 1,
+    maxZoom: L.OSOpenSpace.RESOLUTIONS.length - 1,
 });
 ```
 
@@ -83,7 +84,8 @@ See [our demo](http://rob-murray.github.io/os-leaflet/) for more details.
 This layer is hard-coded to work with only Ordnance Survey products with 200px tiles are working at the moment, the resolutions available are below.
 
 ```
-[2500, 1000, 500, 200, 100, 50, 25, 10, 5, 2.5] // OV0, OV1, OV2, MSR, MS, 250KR, 250K, 50KR, 50K, VMD
+[2500, 1000, 500, 200, 100, 50, 25, 10, 5, 2.5] 
+// OV0, OV1, OV2, MSR, MS, 250KR, 250K, 50KR, 50K, VMD
 ```
 
 For the full spec, see [OS website](http://www.ordnancesurvey.co.uk/business-and-government/help-and-support/web-services/os-ondemand/configuring-wmts.html)
