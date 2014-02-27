@@ -52,7 +52,7 @@ L.OSOpenSpace = L.Class.extend({
               {
                 resolutions: klass.RESOLUTIONS,
                 //origin: [0, 0],
-                bounds: L.bounds([klass._OSGB36.PROJ_EXTENT[0], klass._OSGB36.PROJ_EXTENT[3]], [klass._OSGB36.PROJ_EXTENT[2], klass._OSGB36.PROJ_EXTENT[1]])
+                bounds: L.bounds([klass._OSGB36.PROJ_EXTENT[3], klass._OSGB36.PROJ_EXTENT[0]], [klass._OSGB36.PROJ_EXTENT[2], klass._OSGB36.PROJ_EXTENT[1]])
                 }
             );
             return osgb36crs;
