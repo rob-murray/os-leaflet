@@ -185,7 +185,7 @@ L.TileLayer.OSOpenSpace = L.TileLayer.WMS.extend({
 
         /* tilePoint appears to be topLeft in this config */
         var tileBboxX0 = tileSizeMetres * tilePoint.x;   
-        var tileBboxY0 = (tileSizeMetres * tilePoint.y) - tileSizeMetres;
+        var tileBboxY0 = tileSizeMetres * tilePoint.y;
 
         if (this.debug) console.log(">>tileSizePixels: "+tileSizePixels+", zoom: "+zoom+", resolutionMpp: "+resolutionMpp+", tileSizeMetres: "+tileSizeMetres);
 
