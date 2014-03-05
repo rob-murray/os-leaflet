@@ -6,7 +6,7 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.1/leaflet.css" />
+  <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.css" />
 
 </head>
 <body>
@@ -16,11 +16,15 @@
   
 
   <!-- dependencies -->
-  <!-- we're tied to specific versions of Proj4Leaflet and its dependency on Proj4js-->
-  <script src="http://cdn.leafletjs.com/leaflet-0.7.1/leaflet.js"></script>
+  <!-- 
+    We're tied to specific versions of Proj4Leaflet and its dependency on Proj4js
+
+    ** Don't pull file from github like this in production apps!
+  -->
+  <script src="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.js"></script>
   <script src="https://rawgithub.com/kartena/Proj4Leaflet/master/lib/proj4-compressed.js"></script><!-- proj4js -->
   <script src="https://rawgithub.com/kartena/Proj4Leaflet/master/src/proj4leaflet.js"></script><!-- proj4leaflet -->
-  <script src="../src/openspace.js"></script><!-- OS layer -->
+  <script src="../src/openspace.js"></script><!-- OS OpenSpace layer -->
 
 
   <script>
