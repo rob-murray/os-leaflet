@@ -44,11 +44,11 @@ L.OSOpenSpace = L.Class.extend({
         getCRS: function(){
 
             if (typeof window.L === 'undefined' || typeof window.proj4 === 'undefined') {
-                throw 'Leaflet & Proj4js libraries must be included before OSOpenSpace layer';
+                throw 'Leaflet and Proj4js libraries must be included before OSOpenSpace layer';
             }
 
-            var klass = L.OSOpenSpace;
-            var osgb36crs = new L.Proj.CRS( klass._OSGB36.EPSG, klass._OSGB36.DEF,
+            var klass = L.OSOpenSpace,
+                osgb36crs = new L.Proj.CRS( klass._OSGB36.EPSG, klass._OSGB36.DEF,
               {
                 resolutions: klass.RESOLUTIONS,
                 //origin: [0, 0],
@@ -127,7 +127,7 @@ L.TileLayer.OSOpenSpace = L.TileLayer.WMS.extend({
 
     /**
      * Set whether to output some logging.
-     * Set true to turn on, false otherwise
+     * Override in constructor options argument to enable.
      */
     debug: false,
 
@@ -140,10 +140,14 @@ L.TileLayer.OSOpenSpace = L.TileLayer.WMS.extend({
      */
     initialize: function (apiKey, options) { // (String, Object)
 
+        if (!apiKey) {
+            throw new Error("OSOpenSpace layer requires an API Key parameter to function.");
+        }
+
         var authParams = {
-            "KEY": apiKey,
-            "URL": "file:///"
-        };
+                "KEY": apiKey,
+                "URL": "file:///"
+            };
                
         this.options.tileSize = 200;
         this.resolutions = L.OSOpenSpace.RESOLUTIONS;
@@ -158,6 +162,10 @@ L.TileLayer.OSOpenSpace = L.TileLayer.WMS.extend({
             // all keys that are not TileLayer options go to WMS params
             if (!this.options.hasOwnProperty(i) && i !== 'crs') {
                 wmsParams[i] = options[i];
+            }
+
+            if (i === 'debug') {
+                this.debug = options[i];
             }
         }
 
@@ -174,7 +182,7 @@ L.TileLayer.OSOpenSpace = L.TileLayer.WMS.extend({
      */
     getTileUrl: function (tilePoint) { // (Point, Number) -> String
 
-        if (this.debug) console.log('>>tilePoint: ',tilePoint.toString());
+        if (this.debug) { console.log('>>tilePoint: ',tilePoint.toString()) };
 
         var map = this._map,
             tileSizePixels = this.options.tileSize,
@@ -187,14 +195,14 @@ L.TileLayer.OSOpenSpace = L.TileLayer.WMS.extend({
         var tileBboxX0 = tileSizeMetres * tilePoint.x;   
         var tileBboxY0 = (tileSizeMetres * tilePoint.y) - tileSizeMetres;
 
-        if (this.debug) console.log(">>tileSizePixels: "+tileSizePixels+", zoom: "+zoom+", resolutionMpp: "+resolutionMpp+", tileSizeMetres: "+tileSizeMetres);
+        if (this.debug) {console.log(">>tileSizePixels: "+tileSizePixels+", zoom: "+zoom+", resolutionMpp: "+resolutionMpp+", tileSizeMetres: "+tileSizeMetres) };
 
         /* service is a tile based wms format and only requires x0,y0 */
         var bbox = [tileBboxX0, tileBboxY0, 0, 0].join(',');
 
         var url = L.Util.template(this._url, {});
 
-        if (this.debug) console.log(">>Bbox: ",bbox);
+        if (this.debug) { console.log(">>Bbox: ",bbox) };
 
         return url + L.Util.getParamString(this.wmsParams) + "&BBOX=" + bbox + '&WIDTH=' + tileSizePixels + '&HEIGHT=' +tileSizePixels + '&LAYERS='+resolutionMpp;
     
