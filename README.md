@@ -19,7 +19,7 @@ This layer uses the OS Openspace Free service and the mapstack is defined for th
 
 This repository contains the following sections:
 
-1. `src` - This contains the source code to the `L.TileLayer.OSOpenSpace`.
+1. `src/osopenspace.js` - This contains the source code to the `L.TileLayer.OSOpenSpace`.
 2. [demo](http://rob-murray.github.io/os-leaflet/) - A simple demo to show off the functionality.
 
 
@@ -30,14 +30,19 @@ This repository contains the following sections:
 
 ### Dependencies
 
-* [Proj4Leaflet](https://github.com/kartena/Proj4Leaflet)
-* Proj4Leaflet requires [Proj4js](http://trac.osgeo.org/proj4js/)
-* [Leafletjs](http://leafletjs.com/)
+Download these dependencies and import into your project so that this OS OpenSpace layer can work.
 
+* [Leafletjs](http://leafletjs.com/)
+* Proj4Leaflet requires [Proj4js](http://trac.osgeo.org/proj4js/)
+* [Proj4Leaflet](https://github.com/kartena/Proj4Leaflet)
+
+**Note:** The order of import should be as above; Leaflet, Proj4js, Proj4Leaflet and then OS OpenSpace layer.
 
 ### Register for an API key
 
 Ordnance Survey require an API key for use with their tile service, head over to [OS OpenSpace](http://www.ordnancesurvey.co.uk/oswebsite/web-services/os-openspace/) to register before starting.
+
+**Note:** This will work locally without an API key; both `localhost` and `file:///` hostname and protocol override the need for a key.
 
 
 ### Displaying a map
@@ -65,7 +70,7 @@ var map = new L.Map('map', {
 });
 ```
 
-Finally, create a new `L.TileLayer.OSOpenSpace` and add to the map instance as normal. `L.TileLayer.OSOpenSpace` takes two params, `(apiKey, options)` as `(String, Object)`.
+Finally, create a new `L.TileLayer.OSOpenSpace` and add to the map instance as normal. `L.TileLayer.OSOpenSpace` takes two params, `(apiKey, options)` as `(String, Object)` - the `apiKey` should be the Ordnance Survey [OpenSpace](http://www.ordnancesurvey.co.uk/oswebsite/web-services/os-openspace/) API key for the website domain name to be used. 
 
 
 ```javascript
