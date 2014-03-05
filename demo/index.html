@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Leaflet - OS OpenSpace Example</title>
+  <title>Leafletjs - Ordnance Survey OpenSpace Example</title>
   <meta charset="utf-8" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,16 +10,17 @@
 
 </head>
 <body>
-  <h2>Leaflet - OS OpenSpace Example</h2>
-  <div id="map" style="width: 600px; height: 475px; border: 1px solid black;"></div>
 
-  
+  <h2>Leafletjs - Ordnance Survey OpenSpace Example</h2>
+  <p>See <a href="https://github.com/rob-murray/os-leaflet" title="A leaflet TileLayer using Ordnance Survey OpenSpace web map service">github.com/os-leaflet</a> project for more details.</p>
+
+  <div id="map" style="width: 600px; height: 475px; border: 1px solid black;"></div>
 
   <!-- dependencies -->
   <!-- 
     We're tied to specific versions of Proj4Leaflet and its dependency on Proj4js
 
-    ** Don't pull file from github like this in production apps!
+    ** Don't pull files from github like this in production apps!
   -->
   <script src="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.js"></script>
   <script src="https://rawgithub.com/kartena/Proj4Leaflet/master/lib/proj4-compressed.js"></script><!-- proj4js -->
@@ -79,6 +80,7 @@
         [51.51, -0.047]
       ]).addTo(map).bindPopup("I am a polygon.");
 
+      /* add some event callbacks */
 
       function onMapClick(e) {
         popup
@@ -96,5 +98,6 @@
 } ());
 
   </script>
+
 </body>
 </html>
