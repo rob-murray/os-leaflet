@@ -52,7 +52,7 @@ L.OSOpenSpace = L.Class.extend({
               {
                 resolutions: klass.RESOLUTIONS,
                 //origin: [0, 0],
-                bounds: L.bounds([klass._OSGB36.PROJ_EXTENT[0], klass._OSGB36.PROJ_EXTENT[3]], [klass._OSGB36.PROJ_EXTENT[2], klass._OSGB36.PROJ_EXTENT[1]])
+                bounds: L.bounds([klass._OSGB36.PROJ_EXTENT[3], klass._OSGB36.PROJ_EXTENT[0]], [klass._OSGB36.PROJ_EXTENT[2], klass._OSGB36.PROJ_EXTENT[1]])
                 }
             );
             return osgb36crs;
@@ -193,7 +193,7 @@ L.TileLayer.OSOpenSpace = L.TileLayer.WMS.extend({
 
         /* tilePoint appears to be topLeft in this config */
         var tileBboxX0 = tileSizeMetres * tilePoint.x;   
-        var tileBboxY0 = (tileSizeMetres * tilePoint.y) - tileSizeMetres;
+        var tileBboxY0 = tileSizeMetres * tilePoint.y;
 
         if (this.debug) {console.log(">>tileSizePixels: "+tileSizePixels+", zoom: "+zoom+", resolutionMpp: "+resolutionMpp+", tileSizeMetres: "+tileSizeMetres) };
 
