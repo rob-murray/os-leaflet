@@ -100,5 +100,4 @@ For the full spec, see [OS website](http://www.ordnancesurvey.co.uk/business-and
 
 Please open an issue for any problems.
 
-Note: There are a few issues at the moment! Tiles render but the projection is not correct.
 
