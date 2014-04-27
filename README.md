@@ -1,6 +1,8 @@
 os-leaflet
 ==========
 
+[![Haz Commitz Status](http://haz-commitz.herokuapp.com/repos/rob-murray/os-leaflet/badge.svg)](http://haz-commitz.herokuapp.com/repos/rob-murray/os-leaflet)
+
 A [Leafletjs](http://leafletjs.com/) TileLayer to display Ordnance Survey map data in your Leaflet map via the OS OpenSpace web map service.
 
 **Important:** This project is no way affiliated, nor supported or endorsed by Ordnance Survey. The use of this project does not comply with the Ordnance Survey OpenSpace service [terms and conditions](http://www.ordnancesurvey.co.uk/business-and-government/licensing/licences/os-openspace-developer-agreement.html).
