@@ -31,8 +31,8 @@ L.OSOpenSpace = L.Class.extend({
          */
         _OSGB36: {
             EPSG:  'EPSG:27700',
-            DEF: '+proj=tmerc +lat_0=49 +lon_0=-2 +k=0.9996012717 +x_0=400000 +y_0=-100000' + 
-            '+ellps=airy +datum=OSGB36 +units=m +no_defs',
+            DEF: '+proj=tmerc +lat_0=49 +lon_0=-2 +k=0.999601 +x_0=400000 +y_0=-100000 +ellps=airy' +
+            '+towgs84=446.448,-125.157,542.060,0.1502,0.2470,0.8421,-20.4894 +units=m +no_defs no_defs',
             EXTENT: [1393.0196, 13494.9764, 671196.3657, 1230275.0454],
             PROJ_EXTENT: [0, 0, 700000, 1300000]
         },
