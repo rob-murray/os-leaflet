@@ -6,13 +6,11 @@
  * https://github.com/rob-murray/os-leaflet
  */
 L.OSOpenSpace = L.Class.extend({
-
     /**
      * Define some static fields; help out developers & encapsulate
      *  boilerplate code.
      */
     statics: {
-
         /**
          * The tile resolutions available here.
          *  In metres per pixel.
@@ -38,10 +36,18 @@ L.OSOpenSpace = L.Class.extend({
         },
 
         /**
+         * Return a {String} verion for the EPSG:27700 definition.
+         * {String}
+         */
+         getCrsAsString: function() {
+          return L.OSOpenSpace._OSGB36.DEF;
+         },
+
+        /**
          * Return a {L.Proj.CRS} configured to EPSG:27700 for the OpenSpace Tile layer.
          * {L.Proj.CRS}
          */
-        getCRS: function(){
+        getCRS: function() {
 
             if (typeof window.L === 'undefined' || typeof window.proj4 === 'undefined') {
                 throw 'Leaflet and Proj4js libraries must be included before OSOpenSpace layer';
@@ -49,18 +55,16 @@ L.OSOpenSpace = L.Class.extend({
 
             var klass = L.OSOpenSpace,
                 osgb36crs = new L.Proj.CRS( klass._OSGB36.EPSG, klass._OSGB36.DEF,
-              {
-                resolutions: klass.RESOLUTIONS,
-                //origin: [0, 0],
-                bounds: L.bounds([klass._OSGB36.PROJ_EXTENT[3], klass._OSGB36.PROJ_EXTENT[0]], [klass._OSGB36.PROJ_EXTENT[2], klass._OSGB36.PROJ_EXTENT[1]])
+                {
+                  resolutions: klass.RESOLUTIONS,
+                  //origin: [0, 0],
+                  bounds: L.bounds([klass._OSGB36.PROJ_EXTENT[3], klass._OSGB36.PROJ_EXTENT[0]], [klass._OSGB36.PROJ_EXTENT[2], klass._OSGB36.PROJ_EXTENT[1]])
                 }
             );
             return osgb36crs;
         }
 
     }
-
-
 });
 
 /**
@@ -131,15 +135,13 @@ L.TileLayer.OSOpenSpace = L.TileLayer.WMS.extend({
      */
     debug: false,
 
-
     /**
      * Create new instance of `L.TileLayer.OSOpenSpace`
      * Inject custom properties into request params
      *
      * @override
      */
-    initialize: function (apiKey, options) { // (String, Object)
-
+    initialize: function(apiKey, options) { // (String, Object)
         if (!apiKey) {
             throw new Error("OSOpenSpace layer requires an API Key parameter to function.");
         }
@@ -180,8 +182,7 @@ L.TileLayer.OSOpenSpace = L.TileLayer.WMS.extend({
      *
      * @override
      */
-    getTileUrl: function (tilePoint) { // (Point, Number) -> String
-
+    getTileUrl: function(tilePoint) { // (Point, Number) -> String
         if (this.debug) { console.log('>>tilePoint: ',tilePoint.toString()) };
 
         var map = this._map,
@@ -205,9 +206,7 @@ L.TileLayer.OSOpenSpace = L.TileLayer.WMS.extend({
         if (this.debug) { console.log(">>Bbox: ",bbox) };
 
         return url + L.Util.getParamString(this.wmsParams) + "&BBOX=" + bbox + '&WIDTH=' + tileSizePixels + '&HEIGHT=' +tileSizePixels + '&LAYERS='+resolutionMpp;
-
     }
-
 });
 
 /* factory */
