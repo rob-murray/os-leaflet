@@ -1,6 +1,6 @@
 
 /**
- * os-leaflet ; A [Leafletjs](http://leafletjs.com/) TileLayer to display Ordnance Survey 
+ * os-leaflet ; A [Leafletjs](http://leafletjs.com/) TileLayer to display Ordnance Survey
  *       data in your Leaflet map via the OS OpenSpace web map service.
  *
  * https://github.com/rob-murray/os-leaflet
@@ -23,7 +23,7 @@ L.OSOpenSpace = L.Class.extend({
         /**
          * The OSGB36 datum Proj4 def & auxiliary data.
          *
-         * proj => minx, miny -> 1393.0196, 13494.9764  
+         * proj => minx, miny -> 1393.0196, 13494.9764
          *   max-x, max-y -> 671196.3657, 1230275.0454
          *   xmin-7.5600, ymin49.9600, xmax1.7800, ymax60.8400
          *   0,0,700000,1300000
@@ -31,7 +31,7 @@ L.OSOpenSpace = L.Class.extend({
          */
         _OSGB36: {
             EPSG:  'EPSG:27700',
-            DEF: '+proj=tmerc +lat_0=49 +lon_0=-2 +k=0.999601 +x_0=400000 +y_0=-100000 +ellps=airy' +
+            DEF: '+proj=tmerc +lat_0=49 +lon_0=-2 +k=0.9996012717 +x_0=400000 +y_0=-100000 +ellps=airy' +
             '+towgs84=446.448,-125.157,542.060,0.1502,0.2470,0.8421,-20.4894 +units=m +no_defs no_defs',
             EXTENT: [1393.0196, 13494.9764, 671196.3657, 1230275.0454],
             PROJ_EXTENT: [0, 0, 700000, 1300000]
@@ -57,8 +57,8 @@ L.OSOpenSpace = L.Class.extend({
             );
             return osgb36crs;
         }
-            
-    }    
+
+    }
 
 
 });
@@ -98,7 +98,7 @@ L.TileLayer.OSOpenSpace = L.TileLayer.WMS.extend({
      * In metres per pixel
      */
     resolutions: [],
-    
+
     /**
      * The URL of the OS OpenSpace (Free) tile server
      */
@@ -108,10 +108,10 @@ L.TileLayer.OSOpenSpace = L.TileLayer.WMS.extend({
      * The spec for the OS products available here in the format
      * ProductName: [resolution (mpp), tile size (pixels)]
      * Not used at present, for info.
-     * 
+     *
      * For more details see http://www.ordnancesurvey.co.uk/business-and-government/help-and-support/web-services/os-ondemand/configuring-wmts.html
      *
-     
+
     tileResolutions: {
         "VMD": [2.5, 200],
         "50K": [5.0, 200],
@@ -148,10 +148,10 @@ L.TileLayer.OSOpenSpace = L.TileLayer.WMS.extend({
                 "KEY": apiKey,
                 "URL": "file:///"
             };
-               
+
         this.options.tileSize = 200;
         this.resolutions = L.OSOpenSpace.RESOLUTIONS;
-        this.defaultLayerOptions.maxZoom = L.OSOpenSpace.RESOLUTIONS.length - 1; 
+        this.defaultLayerOptions.maxZoom = L.OSOpenSpace.RESOLUTIONS.length - 1;
 
         var wmsParams = L.extend(authParams, this.defaultWmsParams),
             tileSize = options.tileSize || this.options.tileSize;
@@ -172,7 +172,7 @@ L.TileLayer.OSOpenSpace = L.TileLayer.WMS.extend({
         this.wmsParams = wmsParams;
 
         L.setOptions(this, this.defaultLayerOptions);
-    },    
+    },
 
     /**
      * Return a url for this tile.
@@ -192,7 +192,7 @@ L.TileLayer.OSOpenSpace = L.TileLayer.WMS.extend({
             tileSizeMetres = tileSizePixels * resolutionMpp;
 
         /* tilePoint appears to be topLeft in this config */
-        var tileBboxX0 = tileSizeMetres * tilePoint.x;   
+        var tileBboxX0 = tileSizeMetres * tilePoint.x;
         var tileBboxY0 = tileSizeMetres * tilePoint.y;
 
         if (this.debug) {console.log(">>tileSizePixels: "+tileSizePixels+", zoom: "+zoom+", resolutionMpp: "+resolutionMpp+", tileSizeMetres: "+tileSizeMetres) };
@@ -205,7 +205,7 @@ L.TileLayer.OSOpenSpace = L.TileLayer.WMS.extend({
         if (this.debug) { console.log(">>Bbox: ",bbox) };
 
         return url + L.Util.getParamString(this.wmsParams) + "&BBOX=" + bbox + '&WIDTH=' + tileSizePixels + '&HEIGHT=' +tileSizePixels + '&LAYERS='+resolutionMpp;
-    
+
     }
 
 });
