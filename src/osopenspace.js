@@ -1,4 +1,3 @@
-
 /**
  * os-leaflet ; A [Leafletjs](http://leafletjs.com/) TileLayer to display Ordnance Survey
  *       data in your Leaflet map via the OS OpenSpace web map service.
@@ -28,9 +27,9 @@ L.OSOpenSpace = L.Class.extend({
          * {Object}
          */
         _OSGB36: {
-            EPSG:  'EPSG:27700',
+            EPSG: 'EPSG:27700',
             DEF: '+proj=tmerc +lat_0=49 +lon_0=-2 +k=0.9996012717 +x_0=400000 +y_0=-100000 +ellps=airy' +
-            '+towgs84=446.448,-125.157,542.060,0.1502,0.2470,0.8421,-20.4894 +units=m +no_defs no_defs',
+                '+towgs84=446.448,-125.157,542.060,0.1502,0.2470,0.8421,-20.4894 +units=m +no_defs no_defs',
             EXTENT: [1393.0196, 13494.9764, 671196.3657, 1230275.0454],
             PROJ_EXTENT: [0, 0, 700000, 1300000]
         },
@@ -39,31 +38,27 @@ L.OSOpenSpace = L.Class.extend({
          * Return a {String} verion for the EPSG:27700 definition.
          * {String}
          */
-         getCrsAsString: function() {
-          return L.OSOpenSpace._OSGB36.DEF;
-         },
+        getCrsAsString: function() {
+            return L.OSOpenSpace._OSGB36.DEF;
+        },
 
         /**
          * Return a {L.Proj.CRS} configured to EPSG:27700 for the OpenSpace Tile layer.
          * {L.Proj.CRS}
          */
         getCRS: function() {
-
             if (typeof window.L === 'undefined' || typeof window.proj4 === 'undefined') {
                 throw 'Leaflet and Proj4js libraries must be included before OSOpenSpace layer';
             }
 
             var klass = L.OSOpenSpace,
-                osgb36crs = new L.Proj.CRS( klass._OSGB36.EPSG, klass._OSGB36.DEF,
-                {
-                  resolutions: klass.RESOLUTIONS,
-                  //origin: [0, 0],
-                  bounds: L.bounds([klass._OSGB36.PROJ_EXTENT[3], klass._OSGB36.PROJ_EXTENT[0]], [klass._OSGB36.PROJ_EXTENT[2], klass._OSGB36.PROJ_EXTENT[1]])
-                }
-            );
+                osgb36crs = new L.Proj.CRS(klass._OSGB36.EPSG, klass._OSGB36.DEF, {
+                    resolutions: klass.RESOLUTIONS,
+                    //origin: [0, 0],
+                    bounds: L.bounds([klass._OSGB36.PROJ_EXTENT[3], klass._OSGB36.PROJ_EXTENT[0]], [klass._OSGB36.PROJ_EXTENT[2], klass._OSGB36.PROJ_EXTENT[1]])
+                });
             return osgb36crs;
         }
-
     }
 });
 
@@ -73,7 +68,6 @@ L.OSOpenSpace = L.Class.extend({
  *
  */
 L.TileLayer.OSOpenSpace = L.TileLayer.WMS.extend({
-
     /**
      * Standard WMS params, specific for OpenSpace service.
      */
@@ -147,9 +141,9 @@ L.TileLayer.OSOpenSpace = L.TileLayer.WMS.extend({
         }
 
         var authParams = {
-                "KEY": apiKey,
-                "URL": "file:///"
-            };
+            "KEY": apiKey,
+            "URL": "file:///"
+        };
 
         this.options.tileSize = 200;
         this.resolutions = L.OSOpenSpace.RESOLUTIONS;
@@ -183,7 +177,9 @@ L.TileLayer.OSOpenSpace = L.TileLayer.WMS.extend({
      * @override
      */
     getTileUrl: function(tilePoint) { // (Point, Number) -> String
-        if (this.debug) { console.log('>>tilePoint: ',tilePoint.toString()) };
+        if (this.debug) {
+            console.log('>>tilePoint: ', tilePoint.toString());
+        }
 
         var map = this._map,
             tileSizePixels = this.options.tileSize,
@@ -196,20 +192,24 @@ L.TileLayer.OSOpenSpace = L.TileLayer.WMS.extend({
         var tileBboxX0 = tileSizeMetres * tilePoint.x;
         var tileBboxY0 = tileSizeMetres * tilePoint.y;
 
-        if (this.debug) {console.log(">>tileSizePixels: "+tileSizePixels+", zoom: "+zoom+", resolutionMpp: "+resolutionMpp+", tileSizeMetres: "+tileSizeMetres) };
+        if (this.debug) {
+            console.log(">>tileSizePixels: " + tileSizePixels + ", zoom: " + zoom + ", resolutionMpp: " + resolutionMpp + ", tileSizeMetres: " + tileSizeMetres);
+        }
 
         /* service is a tile based wms format and only requires x0,y0 */
         var bbox = [tileBboxX0, tileBboxY0, 0, 0].join(',');
 
         var url = L.Util.template(this._url, {});
 
-        if (this.debug) { console.log(">>Bbox: ",bbox) };
+        if (this.debug) {
+            console.log(">>Bbox: ", bbox);
+        }
 
-        return url + L.Util.getParamString(this.wmsParams) + "&BBOX=" + bbox + '&WIDTH=' + tileSizePixels + '&HEIGHT=' +tileSizePixels + '&LAYERS='+resolutionMpp;
+        return url + L.Util.getParamString(this.wmsParams) + "&BBOX=" + bbox + '&WIDTH=' + tileSizePixels + '&HEIGHT=' + tileSizePixels + '&LAYERS=' + resolutionMpp;
     }
 });
 
 /* factory */
-L.tileLayer.osopenspace = function (apiKey, options) {
+L.tileLayer.osopenspace = function(apiKey, options) {
     return new L.TileLayer.OSOpenSpace(apiKey, options);
 };
