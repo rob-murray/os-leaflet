@@ -35,7 +35,7 @@ With npm:
 $ npm install os-leaflet
 ```
 
-Bundle for the browser somehow, eg [browserify](http://browserify.org/).
+Bundle for the browser somehow, eg [browserify](http://browserify.org/), and `require('os-leaflet')`.
 
 ### Manually
 
@@ -53,7 +53,7 @@ Ordnance Survey require an API key for use with their tile service, head over to
 
 This layer uses the OS Openspace Free service and with the mapstack or products configured for the best experience available with the Free service.
 
-**Note:** This will work locally without an API key; both `localhost` and `file:///` hostname and protocol override the need for a key.
+**Note:** This will work locally an key; both `localhost` and `file:///` hostname and protocol override the hostname check.
 
 
 ### Displaying a map
