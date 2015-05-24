@@ -74,7 +74,7 @@ Finally, create a new `L.TileLayer.OSOpenSpace` and add to the map instance as n
 
 
 ```javascript
-var openspaceLayer = L.tileLayer.osopenspace("<API Key>", {});
+var openspaceLayer = L.tileLayer.OSOpenSpace("<API Key>", {});
 
 map.addLayer(openspaceLayer);
 ```
