@@ -12,13 +12,13 @@
   } else if (typeof exports === 'object') {
     // Node & CommonJS-like environments.
     var L = require('leaflet');
-    require('proj4leaflet')
+    require('proj4leaflet');
 
     module.exports = factory(L);
   } else {
     // Browser globals
-    if (typeof window.L === "undefined") {
-      throw "Leaflet missing";
+    if (typeof window.L === 'undefined') {
+      throw 'Leaflet missing';
     }
     root.returnExports = factory(root.L);
   }
@@ -104,7 +104,7 @@
       continuousWorld: true,
       worldCopyJump: false,
       tms: true,
-      attribution: " OS OpenSpace",
+      attribution: ' OS OpenSpace',
     },
 
     /**
@@ -116,7 +116,7 @@
     /**
      * The URL of the OS OpenSpace (Free) tile server
      */
-    _url: "http://openspace.ordnancesurvey.co.uk/osmapapi/ts",
+    _url: 'http://openspace.ordnancesurvey.co.uk/osmapapi/ts',
 
     /**
      * The spec for the OS products available here in the format
@@ -127,16 +127,16 @@
      *
 
     tileResolutions: {
-      "VMD": [2.5, 200],
-      "50K": [5.0, 200],
-      "50KR": [10.0, 200],
-      "250K": [25.0, 200],
-      "250KR": [50.0, 200],
-      "MS": [100.0, 200],
-      "MSR": [200.0, 200],
-      "OV2": [500.0, 200],
-      "OV1": [1000.0, 200],
-      "OV0": [2500.0, 200]
+      'VMD': [2.5, 200],
+      '50K': [5.0, 200],
+      '50KR': [10.0, 200],
+      '250K': [25.0, 200],
+      '250KR': [50.0, 200],
+      'MS': [100.0, 200],
+      'MSR': [200.0, 200],
+      'OV2': [500.0, 200],
+      'OV1': [1000.0, 200],
+      'OV0': [2500.0, 200]
     },*/
 
     /**
@@ -153,22 +153,22 @@
      */
     initialize: function(apiKey, options) { // (String, Object)
       if (!apiKey) {
-        throw "OSOpenSpace layer requires an API Key parameter to function.";
+        throw 'OSOpenSpace layer requires an API Key parameter to function.';
       }
 
-      var authParams = {
-        "KEY": apiKey,
-        "URL": "file:///"
+      var tileSize = 200,
+        authParams = {
+        'KEY': apiKey,
+        'URL': 'file:///'
       };
 
-      this.options.tileSize = 200;
+      // hard code the tileSize until we fix this. Or Ordnance Survey do.
+      this.options.tileSize = tileSize;
       this.resolutions = L.OSOpenSpace.RESOLUTIONS;
       this.defaultLayerOptions.maxZoom = L.OSOpenSpace.RESOLUTIONS.length - 1;
 
-      var wmsParams = L.extend(authParams, this.defaultWmsParams),
-        tileSize = options.tileSize || this.options.tileSize;
-
-      wmsParams.width = wmsParams.height = 200;
+      var wmsParams = L.extend(authParams, this.defaultWmsParams);
+      wmsParams.width = wmsParams.height = tileSize;
 
       for (var i in options) {
         // all keys that are not TileLayer options go to WMS params
@@ -197,9 +197,7 @@
         console.log('>>tilePoint: ', tilePoint.toString());
       }
 
-      var map = this._map,
-        tileSizePixels = this.options.tileSize,
-        crs = map.options.crs,
+      var tileSizePixels = this.options.tileSize,
         zoom = tilePoint.z,
         resolutionMpp = this.resolutions[zoom],
         tileSizeMetres = tileSizePixels * resolutionMpp;
@@ -209,7 +207,7 @@
       var tileBboxY0 = tileSizeMetres * tilePoint.y;
 
       if (this.debug) {
-        console.log(">>tileSizePixels: " + tileSizePixels + ", zoom: " + zoom + ", resolutionMpp: " + resolutionMpp + ", tileSizeMetres: " + tileSizeMetres);
+        console.log('>>tileSizePixels: ' + tileSizePixels + ', zoom: ' + zoom + ', resolutionMpp: ' + resolutionMpp + ', tileSizeMetres: ' + tileSizeMetres);
       }
 
       /* service is a tile based wms format and only requires x0,y0 */
@@ -218,10 +216,10 @@
       var url = L.Util.template(this._url, {});
 
       if (this.debug) {
-        console.log(">>Bbox: ", bbox);
+        console.log('>>Bbox: ', bbox);
       }
 
-      return url + L.Util.getParamString(this.wmsParams) + "&BBOX=" + bbox + '&WIDTH=' + tileSizePixels + '&HEIGHT=' + tileSizePixels + '&LAYERS=' + resolutionMpp;
+      return url + L.Util.getParamString(this.wmsParams) + '&BBOX=' + bbox + '&WIDTH=' + tileSizePixels + '&HEIGHT=' + tileSizePixels + '&LAYERS=' + resolutionMpp;
     }
   });
 
