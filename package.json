@@ -1,0 +1,34 @@
+{
+  "name": "os-leaflet",
+  "version": "0.2.0",
+  "description": "A Leafletjs TileLayer using Ordnance Survey OpenSpace web map service",
+  "main": "OSOpenSpace.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rob-murray/os-leaflet.git"
+  },
+  "keywords": [
+    "leaflet",
+    "ordnance",
+    "survey",
+    "os",
+    "osgb",
+    "openspace"
+  ],
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/rob-murray/os-leaflet/issues"
+  },
+  "homepage": "https://github.com/rob-murray/os-leaflet",
+  "dependencies": {
+    "leaflet": "^0.7.3",
+    "proj4leaflet": "^0.7.1"
+  },
+  "devDependencies": {
+    "jshint": "^2.7.0"
+  }
+}
