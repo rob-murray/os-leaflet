@@ -25,10 +25,19 @@ This repository contains the following sections:
 
 ## Getting started
 
-!Beware; this is somewhat experimental at the moment.
+You can get hold of the code with npm and it should work fine with [browserify](http://browserify.org/). Or you can just manually import the layer.
 
+### Dependency management
 
-### Dependencies
+With npm:
+
+```
+$ npm install os-leaflet
+```
+
+Bundle for the browser somehow, eg [browserify](http://browserify.org/).
+
+### Manually
 
 Download these dependencies and import into your project so that this OS OpenSpace layer can work.
 
