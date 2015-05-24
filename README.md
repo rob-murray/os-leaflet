@@ -19,13 +19,13 @@ The **os-leaflet** project is a new `L.TileLayer` that can be used to easily get
 
 This repository contains the following sections:
 
-1. `src/osopenspace.js` - This contains the source code to the `L.TileLayer.OSOpenSpace` layer.
+1. `OSOpenSpace.js` - This contains the source code to the `L.TileLayer.OSOpenSpace` layer.
 2. [Demo](http://rob-murray.github.io/os-leaflet/) - A simple demo to show off the functionality.
 
 
 ## Getting started
 
-!Beware; this is experimental and probably not production ready.
+!Beware; this is somewhat experimental at the moment.
 
 
 ### Dependencies
