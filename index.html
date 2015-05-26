@@ -23,7 +23,7 @@
   <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
   <script src="https://rawgithub.com/kartena/Proj4Leaflet/master/lib/proj4-compressed.js"></script><!-- proj4js -->
   <script src="https://rawgithub.com/kartena/Proj4Leaflet/master/src/proj4leaflet.js"></script><!-- proj4leaflet -->
-  <script src="https://rawgithub.com/rob-murray/os-leaflet/master/src/osopenspace.js"></script><!-- OS OpenSpace layer -->
+  <script src="https://rawgithub.com/rob-murray/os-leaflet/master/OSOpenSpace.js"></script><!-- OS OpenSpace layer -->
 
 
   <script>
@@ -51,7 +51,7 @@
       });
 
       /* New L.TileLayer.OSOpenSpace with API Key */
-      openspaceLayer = L.tileLayer.osopenspace("EC9EDE7DAD732ABAE0430C6CA40AB812", {debug: true});
+      openspaceLayer = L.tileLayer.OSOpenSpace("EC9EDE7DAD732ABAE0430C6CA40AB812", {debug: true});
 
       map.addLayer(openspaceLayer);
       map.setView(OSHQ.WGS84, 1);
