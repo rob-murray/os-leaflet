@@ -105,6 +105,7 @@
       worldCopyJump: false,
       tms: true,
       attribution: ' OS OpenSpace',
+      detectRetina: false
     },
 
     /**
@@ -158,9 +159,9 @@
 
       var tileSize = 200,
         authParams = {
-        'KEY': apiKey,
-        'URL': 'file:///'
-      };
+          'KEY': apiKey,
+          'URL': 'file:///'
+        };
 
       // hard code the tileSize until we fix this. Or Ordnance Survey do.
       this.options.tileSize = tileSize;
