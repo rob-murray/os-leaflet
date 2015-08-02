@@ -117,7 +117,7 @@
     /**
      * The URL of the OS OpenSpace (Free) tile server
      */
-    _url: 'http://openspace.ordnancesurvey.co.uk/osmapapi/ts',
+    _url: 'https://openspace.ordnancesurvey.co.uk/osmapapi/ts',
 
     /**
      * The spec for the OS products available here in the format
