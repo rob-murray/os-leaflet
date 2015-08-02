@@ -104,7 +104,7 @@
       continuousWorld: true,
       worldCopyJump: false,
       tms: true,
-      attribution: ' OS OpenSpace',
+      attribution: '© Crown copyright and database rights 2015 Ordnance Survey.',
       detectRetina: false
     },
 
