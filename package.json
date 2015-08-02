@@ -1,7 +1,7 @@
 {
   "name": "os-leaflet",
-  "version": "0.2.0",
-  "description": "A Leafletjs TileLayer using Ordnance Survey OpenSpace web map service",
+  "version": "0.2.1",
+  "description": "A Leaflet js TileLayer using Ordnance Survey OpenSpace web map service",
   "main": "OSOpenSpace.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
