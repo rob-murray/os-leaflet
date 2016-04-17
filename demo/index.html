@@ -44,15 +44,12 @@
 
       /* L.Map with OS options */
       map = new L.Map('map', {
-        crs: L.OSOpenSpace.getCRS(),
-        continuousWorld: true,
-        worldCopyJump: false,
-        minZoom: 0,
-        maxZoom: L.OSOpenSpace.RESOLUTIONS.length - 1,
+        zoom: 6,
+        crs: L.OSOpenSpace.CRS,
       });
 
       /* New L.TileLayer.OSOpenSpace with API Key */
-      openspaceLayer = L.tileLayer.OSOpenSpace("EC9EDE7DAD732ABAE0430C6CA40AB812", {debug: true});
+      openspaceLayer = L.OSOpenSpace.tilelayer("EC9EDE7DAD732ABAE0430C6CA40AB812", {});
 
       map.addLayer(openspaceLayer);
       map.setView(OSHQ.WGS84, 1);
