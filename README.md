@@ -77,27 +77,23 @@ To use the Layer in your map just get the `L.Proj.CRS` - Coordinate Reference Sy
 
 
 ```javascript
-var osgbCrs = L.OSOpenSpace.getCRS();
+var osgbCrs = L.OSOpenSpace.CRS;
 ```
 
 Create a `L.Map` as normal but specify the `L.Proj.CRS` created above and set Leaflet options `continuousWorld` to `true` and `worldCopyJump` to `false`. The zoom levels available are essentially the layers provided by this `OSOpenSpace` layer so set these as below.
 
 ```javascript
 var map = new L.Map('map', {
-  crs: L.OSOpenSpace.getCRS(),
-  continuousWorld: true,
-  worldCopyJump: false,
-  minZoom: 0,
-  maxZoom: L.OSOpenSpace.RESOLUTIONS.length - 1,
+  zoom: 6,
+  crs: L.OSOpenSpace.CRS,
 });
 ```
 
-Finally, create a new `L.TileLayer.OSOpenSpace` and add to the map instance as normal. `L.TileLayer.OSOpenSpace` takes two params, `(apiKey, options)` as `(String, Object)` - the `apiKey` should be the Ordnance Survey [OpenSpace](http://www.ordnancesurvey.co.uk/business-and-government/products/os-openspace/api/index.html) API key for the website domain name to be used.
+Finally, create a new `L.TileLayer` via the factory method `L.OSOpenSpace.tilelayer` and add to the map instance as normal. `L.OSOpenSpace.tilelayer` takes two params, `(apiKey, options)` as `(String, Object)` - the `apiKey` should be the Ordnance Survey [OpenSpace](http://www.ordnancesurvey.co.uk/business-and-government/products/os-openspace/api/index.html) API key for the website domain name to be used.
 
 
 ```javascript
-var openspaceLayer = L.tileLayer.OSOpenSpace("<API Key>", {});
-
+var openspaceLayer = L.OSOpenSpace.tilelayer("<API Key>", {});
 map.addLayer(openspaceLayer);
 ```
 
