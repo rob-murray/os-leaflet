@@ -23,8 +23,8 @@
     root.returnExports = factory(root.L);
   }
 }(this, function(L) {
-
-  L.OSOpenSpace = {};
+	/* This is our namespace for OSOpenSpace on Leaflet js */
+  L.OSOpenSpace = L.OSOpenSpace || {};
   L.OSOpenSpace.CRS = L.extend(
     new L.Proj.CRS(
       'EPSG:27700',
