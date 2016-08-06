@@ -10,11 +10,15 @@ A [Leafletjs](http://leafletjs.com/) TileLayer to display Ordnance Survey map da
 
 ## Description
 
-The **os-leaflet** project is a new `L.TileLayer` that can be used to easily get Ordnance Survey products into a Leaflet map.
+The **os-leaflet** project is a new `L.TileLayer` that can be used to easily get Ordnance Survey products into a Leaflet map, the Leaflet API can be used as normal.
 
 **Note:** This layer uses an Ordnance Survey service that requires an API KEY - attempt to get one [here](http://www.ordnancesurvey.co.uk/business-and-government/products/os-openspace/api/index.html).
 
 ![ScreenShot](https://github.com/rob-murray/os-leaflet/raw/master/screenshot.png "Screenshot of demo app")
+
+## Versions
+
+If you are using Leaflet version < 1.0 then please use [v0.2.1](https://github.com/rob-murray/os-leaflet/releases/tag/v0.2.1) of this library. Checkout [leaflet-1.0](https://github.com/rob-murray/os-leaflet/tree/leaflet-1.0) for a Leaflet 1.0 compatible version - this will be become v1.0 when Leaflet 1.0 is released.
 
 
 ## Contents
@@ -34,10 +38,17 @@ You can get hold of the code with npm and it should work fine with [browserify](
 With npm:
 
 ```
-$ npm install os-leaflet
+$ npm install os-leaflet --save
 ```
 
-Bundle for the browser somehow, eg [browserify](http://browserify.org/), and `require('os-leaflet')`.
+Bundle for the browser with whichever tool you're using, eg [webpack](https://webpack.github.io/), [browserify](http://browserify.org/).
+
+Then just require the libary along with Leaflet in your app.
+
+```javascript
+require('os-leaflet');
+layer = L.tileLayer.OSOpenSpace(...);
+```
 
 ### Manually
 
