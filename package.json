@@ -4,7 +4,8 @@
   "description": "A Leaflet js TileLayer using Ordnance Survey OpenSpace web map service",
   "main": "OSOpenSpace.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint \"OSOpenSpace.js\"; true"
   },
   "repository": {
     "type": "git",
@@ -29,6 +30,8 @@
     "proj4leaflet": "^0.7.1"
   },
   "devDependencies": {
-    "jshint": "^2.7.0"
+    "eslint": "^3.2.2",
+    "eslint-config-airbnb-base": "^5.0.1",
+    "eslint-plugin-import": "^1.12.0"
   }
 }

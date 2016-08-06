@@ -4,25 +4,25 @@
  *
  * https://github.com/rob-murray/os-leaflet
  */
-(function(root, factory) {
+(function (root, factory) {
   // UMD for  Node, AMD or browser globals
   if (typeof define === 'function' && define.amd) {
     // AMD. Register as an anonymous module.
     define(['leaflet', 'proj4leaflet'], factory);
   } else if (typeof exports === 'object') {
     // Node & CommonJS-like environments.
-    var L = require('leaflet');
+    var L = require('leaflet'); // eslint-disable-line vars-on-top
     require('proj4leaflet');
 
     module.exports = factory(L);
   } else {
     // Browser globals
     if (typeof window.L === 'undefined') {
-      throw 'Leaflet missing';
+      throw new Error('Leaflet missing');
     }
     root.returnExports = factory(root.L);
   }
-}(this, function(L) {
+}(this, function (L) {
 	/* This is our namespace for OSOpenSpace on Leaflet js */
   L.OSOpenSpace = L.OSOpenSpace || {};
   L.OSOpenSpace.CRS = L.extend(
@@ -32,7 +32,7 @@
         resolutions: [2500, 1000, 500, 200, 100, 50, 25, 10, 5, 2.5]
       }
     ), {
-      distance: function(a, b) {
+      distance: function (a, b) {
         return L.CRS.Earth.distance(a, b);
       }
     }
@@ -45,9 +45,9 @@
    */
   L.TileLayer.OSOpenSpace = L.TileLayer.WMS.extend({
 
-    initialize: function(apiKey, options) { // (String, Object)
+    initialize: function (apiKey, options) { // (String, Object)
       if (!apiKey) {
-        throw 'OSOpenSpace layer requires an API Key parameter to function.';
+        throw new Error('OSOpenSpace layer requires an API Key parameter to function.');
       }
 
       L.TileLayer.WMS.prototype.initialize.call(this,
@@ -75,22 +75,22 @@
    * Return a url for this tile.
    * Calculate the bbox for the tilePoint and format the wms request
    */
-  getTileUrl: function(tilePoint) { // (Point, Number) -> String
-    var resolutionMpp = this.options.crs.options.resolutions[tilePoint.z],
-      tileSizeMetres = this.options.tileSize * resolutionMpp,
-      tileBboxX0 = tileSizeMetres * tilePoint.x,
-      tileBboxY0 = tileSizeMetres * (-1 - tilePoint.y); // TODO: Is there a missing transformation ? tilePoint appears to be topLeft in this config
+    getTileUrl: function (tilePoint) { // (Point, Number) -> String
+      var resolutionMpp = this.options.crs.options.resolutions[tilePoint.z],
+        tileSizeMetres = this.options.tileSize * resolutionMpp,
+        tileBboxX0 = tileSizeMetres * tilePoint.x,
+        tileBboxY0 = tileSizeMetres * (-1 - tilePoint.y); // TODO: Is there a missing transformation ? tilePoint appears to be topLeft in this config
 
       /* service is a tile based wms format and only requires x0,y0 */
       this.wmsParams.BBOX = [tileBboxX0, tileBboxY0, 0, 0].join(',');
       this.wmsParams.LAYERS = resolutionMpp;
 
-      return this._url + L.Util.getParamString(this.wmsParams);
-    },
+      return this._url + L.Util.getParamString(this.wmsParams); // eslint-disable-line no-underscore-dangle
+    }
   });
 
   /* factory */
-  L.OSOpenSpace.tilelayer = function(apiKey, options) {
+  L.OSOpenSpace.tilelayer = function (apiKey, options) {
     return new L.TileLayer.OSOpenSpace(apiKey, options);
   };
 
