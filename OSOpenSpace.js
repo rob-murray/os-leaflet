@@ -23,7 +23,7 @@
     root.returnExports = factory(root.L);
   }
 }(this, function (L) {
-	/* This is our namespace for OSOpenSpace on Leaflet js */
+  /* This is our namespace for OSOpenSpace on Leaflet js */
   L.OSOpenSpace = L.OSOpenSpace || {};
   L.OSOpenSpace.CRS = L.extend(
     new L.Proj.CRS(
@@ -81,7 +81,7 @@
         tileBboxX0 = tileSizeMetres * tilePoint.x,
         tileBboxY0 = tileSizeMetres * (-1 - tilePoint.y); // TODO: Is there a missing transformation ? tilePoint appears to be topLeft in this config
 
-      /* service is a tile based wms format and only requires x0,y0 */
+      // service is a tile based wms format and only requires x0, y0 - ignore other points
       this.wmsParams.BBOX = [tileBboxX0, tileBboxY0, 0, 0].join(',');
       this.wmsParams.LAYERS = resolutionMpp;
 
