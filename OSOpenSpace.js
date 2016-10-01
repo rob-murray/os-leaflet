@@ -43,7 +43,7 @@
    * Note: An API key is needed, see OS website for details
    *
    */
-  L.TileLayer.OSOpenSpace = L.TileLayer.WMS.extend({
+  L.OSOpenSpace.TileLayer = L.TileLayer.WMS.extend({
 
     initialize: function (apiKey, options) { // (String, Object)
       if (!apiKey) {
@@ -89,9 +89,16 @@
     }
   });
 
-  /* factory */
+  /*
+   * Factory method to create a new OSOpenSpace tilelayer.
+   *
+   * @public
+   * @param {string} apiKey Your API key for OSOpenSpace.
+   * @param {object} options Any options to pass to the tilelayer.
+   * @return {L.TileLayer} TileLayer for Ordnance Survey OpenSpace service..
+   */
   L.OSOpenSpace.tilelayer = function (apiKey, options) {
-    return new L.TileLayer.OSOpenSpace(apiKey, options);
+    return new L.OSOpenSpace.TileLayer(apiKey, options);
   };
 
   return L.OSOpenSpace;
