@@ -26,8 +26,8 @@
   },
   "homepage": "https://github.com/rob-murray/os-leaflet",
   "dependencies": {
-    "leaflet": "^0.7.3",
-    "proj4leaflet": "^0.7.1"
+    "leaflet": "^1.0.3",
+    "proj4leaflet": "^1.0.1"
   },
   "devDependencies": {
     "eslint": "^3.2.2",
