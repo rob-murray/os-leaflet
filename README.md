@@ -18,14 +18,16 @@ The **os-leaflet** project is a new `L.TileLayer` that can be used to easily get
 
 ## Versions
 
-If you are using Leaflet version < 1.0 then please use [v0.2.1](https://github.com/rob-murray/os-leaflet/releases/tag/v0.2.1) of this library. Checkout [leaflet-1.0](https://github.com/rob-murray/os-leaflet/tree/leaflet-1.0) for a Leaflet 1.0 compatible version - this will be become v1.0 when Leaflet 1.0 is released.
+Version 1.x supports [Leaflet 1.0](http://leafletjs.com/2016/09/27/leaflet-1.0-final.html), we depend on other Leaflet 1.0 compatible libraries too.
+
+If you are using Leaflet version < 1.0 then please use [v0.2.1](https://github.com/rob-murray/os-leaflet/releases/tag/v0.2.1) of this library, or the [0.2-stable branch](https://github.com/rob-murray/os-leaflet/tree/0.2-stable).
 
 
 ## Contents
 
 This repository contains the following sections:
 
-1. `OSOpenSpace.js` - This contains the source code to the `L.TileLayer.OSOpenSpace` layer.
+1. `OSOpenSpace.js` - This contains the source code to the `L.OSOpenSpace` tilelayer.
 2. [Demo](http://rob-murray.github.io/os-leaflet/) - A simple demo to show off the functionality.
 
 
@@ -47,7 +49,7 @@ Then just require the libary along with Leaflet in your app.
 
 ```javascript
 require('os-leaflet');
-layer = L.tileLayer.OSOpenSpace(...);
+layer = L.OSOpenSpace.tilelayer(apiKey, ...options);
 ```
 
 ### Manually
@@ -59,6 +61,7 @@ Download these dependencies and import into your project so that this OS OpenSpa
 * [Proj4Leaflet](https://github.com/kartena/Proj4Leaflet)
 
 **Note:** The order of import should be as above; Leaflet, Proj4js, Proj4Leaflet and then OS OpenSpace layer - see the demo for an example.
+
 
 ### Register for an API key
 
@@ -77,27 +80,23 @@ To use the Layer in your map just get the `L.Proj.CRS` - Coordinate Reference Sy
 
 
 ```javascript
-var osgbCrs = L.OSOpenSpace.getCRS();
+var osgbCrs = L.OSOpenSpace.CRS;
 ```
 
 Create a `L.Map` as normal but specify the `L.Proj.CRS` created above and set Leaflet options `continuousWorld` to `true` and `worldCopyJump` to `false`. The zoom levels available are essentially the layers provided by this `OSOpenSpace` layer so set these as below.
 
 ```javascript
 var map = new L.Map('map', {
-  crs: L.OSOpenSpace.getCRS(),
-  continuousWorld: true,
-  worldCopyJump: false,
-  minZoom: 0,
-  maxZoom: L.OSOpenSpace.RESOLUTIONS.length - 1,
+  zoom: 6,
+  crs: L.OSOpenSpace.CRS,
 });
 ```
 
-Finally, create a new `L.TileLayer.OSOpenSpace` and add to the map instance as normal. `L.TileLayer.OSOpenSpace` takes two params, `(apiKey, options)` as `(String, Object)` - the `apiKey` should be the Ordnance Survey [OpenSpace](http://www.ordnancesurvey.co.uk/business-and-government/products/os-openspace/api/index.html) API key for the website domain name to be used.
+Finally, create a new `L.TileLayer` via the factory method `L.OSOpenSpace.tilelayer` and add to the map instance as normal. `L.OSOpenSpace.tilelayer` takes two params, `(apiKey, options)` as `(String, Object)` - the `apiKey` should be the Ordnance Survey [OpenSpace](http://www.ordnancesurvey.co.uk/business-and-government/products/os-openspace/api/index.html) API key for the website domain name to be used.
 
 
 ```javascript
-var openspaceLayer = L.tileLayer.OSOpenSpace("<API Key>", {});
-
+var openspaceLayer = L.OSOpenSpace.tilelayer("<API Key>", {});
 map.addLayer(openspaceLayer);
 ```
 
@@ -106,9 +105,9 @@ Don't forget to set the map centre to somewhere in Great Britain too.
 See [our demo](http://rob-murray.github.io/os-leaflet/) for an example of using the layer.
 
 
-### Products
+### Map products
 
-This layer is currently hard-coded to work with only Ordnance Survey products with 200x200 pixel tiles are working at the moment, the resolutions available are below.
+This layer is currently hard-coded to work with only Ordnance Survey products that have 200x200 pixel tiles at the moment, the resolutions available are below. Other products have varying tile sizes which don't play well with Leaflet, it prefers a power-of-2 stack.
 
 ```
 // OV0, OV1, OV2, MSR, MS, 250KR, 250K, 50KR, 50K, VMD
@@ -122,9 +121,11 @@ For the full spec, see [OS website](http://www.ordnancesurvey.co.uk/business-and
 
 Please open an issue for any problems.
 
+
 ## Contributions
 
 Please use the GitHub pull-request mechanism to submit contributions.
+
 
 ## License
 
