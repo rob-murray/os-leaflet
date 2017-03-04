@@ -1,5 +1,4 @@
-os-leaflet
-==========
+# os-leaflet
 
 [![npm version](https://badge.fury.io/js/os-leaflet.svg)](http://badge.fury.io/js/os-leaflet)
 
@@ -33,7 +32,7 @@ This repository contains the following sections:
 
 ## Getting started
 
-You can get hold of the code with npm and it should work fine with [browserify](http://browserify.org/). Or you can just manually import the layer.
+You can get hold of the code using npm and it should work fine with [browserify](http://browserify.org/). Or you can just manually import the layer.
 
 ### Dependency management
 
@@ -76,14 +75,14 @@ This layer uses the OS Openspace Free service and with the mapstack or products 
 
 The **os-leaflet** project extends Leaflet's `L.TileLayer.WMS` class and integrates easily with Leaflet.
 
-To use the Layer in your map just get the `L.Proj.CRS` - Coordinate Reference System, how the earth is represented in this part of the world - via a factory method.
+To use the Layer in your map just get the **EPSG:27700** `L.Proj.CRS` (Coordinate Reference System - how the earth is represented in for Ordnance Survey maps) - via a factory method as below.
 
 
 ```javascript
 var osgbCrs = L.OSOpenSpace.CRS;
 ```
 
-Create a `L.Map` as normal but specify the `L.Proj.CRS` created above and set Leaflet options `continuousWorld` to `true` and `worldCopyJump` to `false`. The zoom levels available are essentially the layers provided by this `OSOpenSpace` layer so set these as below.
+Create a `L.Map` as normal but specify the `L.Proj.CRS` from this library, see example below. The zoom levels available are essentially the layers provided by this `OSOpenSpace` layer so set these as below.
 
 ```javascript
 var map = new L.Map('map', {
@@ -100,7 +99,7 @@ var openspaceLayer = L.OSOpenSpace.tilelayer("<API Key>", {});
 map.addLayer(openspaceLayer);
 ```
 
-Don't forget to set the map centre to somewhere in Great Britain too.
+Don't forget to set the map centre to somewhere in Great Britain too 😉
 
 See [our demo](http://rob-murray.github.io/os-leaflet/) for an example of using the layer.
 
@@ -115,6 +114,19 @@ This layer is currently hard-coded to work with only Ordnance Survey products th
 ```
 
 For the full spec, see [OS website](http://www.ordnancesurvey.co.uk/business-and-government/help-and-support/web-services/os-ondemand/configuring-wmts.html).
+
+### Coordinates
+
+Points can be added to the map in WGS84 reference system - if you have British National Grid coords then these should be converted.
+
+```javascript
+L.polygon([
+  [50.978633, -1.5740458],
+  [51.068553, -1.5732215],
+  [51.067945, -1.4305097],
+  [50.978027, -1.4316098]
+]).addTo(map).bindPopup('I am the SU32 10K square');
+```
 
 
 ## Issues
