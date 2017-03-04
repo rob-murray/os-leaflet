@@ -91,7 +91,13 @@ var map = new L.Map('map', {
 });
 ```
 
-Finally, create a new `L.TileLayer` via the factory method `L.OSOpenSpace.tilelayer` and add to the map instance as normal. `L.OSOpenSpace.tilelayer` takes two params, `(apiKey, options)` as `(String, Object)` - the `apiKey` should be the Ordnance Survey [OpenSpace](http://www.ordnancesurvey.co.uk/business-and-government/products/os-openspace/api/index.html) API key for the website domain name to be used.
+Finally, create a new `L.TileLayer` via the factory method `L.OSOpenSpace.tilelayer` and add to the map instance as normal. `L.OSOpenSpace.tilelayer` accepts the parameters below.
+
+| Argument | Required? | Description |
+|---|---|---|
+| `apiKey` | Yes | The Ordnance Survey [OpenSpace](http://www.ordnancesurvey.co.uk/business-and-government/products/os-openspace/api/index.html) API key for the website domain name to be used. |
+| `options` | No | An object of layer options to pass to the tilelayer |
+| `apiUrl` | No | The URL of your site associated with the API key, as provided to OSOpenSpace |
 
 
 ```javascript
