@@ -53,7 +53,7 @@
       apiUrl = typeof apiUrl !== 'undefined' ? apiUrl : 'file:///';
 
       L.TileLayer.WMS.prototype.initialize.call(this,
-        'http://openspace.ordnancesurvey.co.uk/osmapapi/ts', {
+        'https://openspace.ordnancesurvey.co.uk/osmapapi/ts', {
           crs: L.OSOpenSpace.CRS,
           maxZoom: 14,
           minZoom: 0,
