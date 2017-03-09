@@ -4,8 +4,7 @@
 
 A [Leafletjs](http://leafletjs.com/) TileLayer to display Ordnance Survey map data in your Leaflet map via the OS OpenSpace web map service.
 
-**Important:** This project is no way affiliated, nor supported or endorsed by Ordnance Survey. The use of this project does not comply with the Ordnance Survey OpenSpace service [terms and conditions](http://www.ordnancesurvey.co.uk/business-and-government/licensing/licences/os-openspace-developer-agreement.html). Use at your peril!
-
+This project is no way affiliated, nor supported or endorsed by Ordnance Survey. Please review Ordnance Survey OpenSpace service [terms and conditions](https://www.ordnancesurvey.co.uk/business-and-government/licensing/licences/os-openspace-developer-agreement.html)
 
 ## Description
 
@@ -75,7 +74,7 @@ This layer uses the OS Openspace Free service and with the mapstack or products 
 
 The **os-leaflet** project extends Leaflet's `L.TileLayer.WMS` class and integrates easily with Leaflet.
 
-To use the Layer in your map just get the **EPSG:27700** `L.Proj.CRS` (Coordinate Reference System - how the earth is represented in for Ordnance Survey maps) - via a factory method as below.
+To use the Layer in your map just get the **EPSG:27700** `L.Proj.CRS` (Coordinate Reference System - how the earth is represented on Ordnance Survey maps) - via a factory method as below.
 
 
 ```javascript
@@ -107,7 +106,9 @@ map.addLayer(openspaceLayer);
 
 Don't forget to set the map centre to somewhere in Great Britain too 😉
 
-See [our demo](http://rob-murray.github.io/os-leaflet/) for an example of using the layer.
+### Example
+
+Check [out the demo](http://rob-murray.github.io/os-leaflet/) for an example of how to use the layer.
 
 
 ### Map products

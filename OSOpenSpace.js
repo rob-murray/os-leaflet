@@ -37,6 +37,7 @@
       }
     }
   );
+  L.OSOpenSpace.attribution = '&copy; Crown copyright and database rights ' + new Date().getFullYear() + ' Ordnance Survey. <a target="_blank" href="http://www.ordnancesurvey.co.uk/oswebsite/web-services/os-openspace/developer-agreement.html">Terms of Use</a>';
 
   /**
    * A custom Layer for Ordnance Survey OpenSpace service.
@@ -49,7 +50,6 @@
       if (!apiKey) {
         throw new Error('OSOpenSpace layer requires an API Key parameter to function.');
       }
-      // Default apiUrl set to file:///
       apiUrl = typeof apiUrl !== 'undefined' ? apiUrl : 'file:///';
 
       L.TileLayer.WMS.prototype.initialize.call(this,
@@ -58,7 +58,7 @@
           maxZoom: 14,
           minZoom: 0,
           tileSize: 200,
-          attribution: '&copy; <a href="https://www.ordnancesurvey.co.uk/osmaps/">Ordnance Survey</a>.'
+          attribution: L.OSOpenSpace.attribution
         },
         options
       );
