@@ -135,6 +135,18 @@ L.polygon([
 ]).addTo(map).bindPopup('I am the SU32 10K square');
 ```
 
+### OS Logo
+
+The Ordnance Survey logo in the bottom left can be removed, along with other attribution, by supplying the option `{ attributionControl: false }` to the map constructor. It it enabled by default.
+
+```javascript
+map = new L.Map('map', {
+  zoom: 6,
+  crs: L.OSOpenSpace.CRS,
+  attributionControl: false
+});
+```
+
 
 ## Issues
 

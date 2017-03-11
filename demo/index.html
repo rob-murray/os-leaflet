@@ -44,7 +44,8 @@
     /* L.Map with OS options */
     map = new L.Map('map', {
       zoom: 6,
-      crs: L.OSOpenSpace.CRS
+      crs: L.OSOpenSpace.CRS,
+      attributionControl: true
     });
 
     /* New L.TileLayer.OSOpenSpace with API Key */
@@ -54,7 +55,7 @@
     map.setView(OSHQ.WGS84, 1);
 
     /* add some ui to the map */
-    L.control.scale().addTo(map);
+    L.control.scale({ position: 'bottomright' }).addTo(map);
 
     L.marker(OSHQ.WGS84).addTo(map)
       .bindPopup('<b>Hello world!</b><br />I am at OSHQ.').openPopup();
