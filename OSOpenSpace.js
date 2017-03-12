@@ -60,7 +60,7 @@
    */
   L.OSOpenSpace.TileLayer = L.TileLayer.WMS.extend({
 
-    initialize: function (apiKey, options, apiUrl) { // (String, Object, String)
+    initialize: function (apiKey, apiUrl, options) { // (String, String, Object)
       if (!apiKey) {
         throw new Error('OSOpenSpace layer requires an API Key parameter to function.');
       }
@@ -126,12 +126,12 @@
    *
    * @public
    * @param {string} apiKey Your API key for OSOpenSpace.
-   * @param {object} options Any options to pass to the tilelayer.
    * @param {string} apiUrl The URL of your site as provided to OSOpenSpace.
+   * @param {object} options Any options to pass to the tilelayer.
    * @return {L.TileLayer} TileLayer for Ordnance Survey OpenSpace service.
    */
-  L.OSOpenSpace.tilelayer = function (apiKey, options, apiUrl) {
-    return new L.OSOpenSpace.TileLayer(apiKey, options, apiUrl);
+  L.OSOpenSpace.tilelayer = function (apiKey, apiUrl, options) {
+    return new L.OSOpenSpace.TileLayer(apiKey, apiUrl, options);
   };
 
   return L.OSOpenSpace;

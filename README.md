@@ -47,7 +47,7 @@ Then just require the libary along with Leaflet in your app.
 
 ```javascript
 require('os-leaflet');
-layer = L.OSOpenSpace.tilelayer(apiKey, ...options);
+layer = L.OSOpenSpace.tilelayer(apiKey, apiUrl, ...options);
 ```
 
 ### Manually
@@ -95,12 +95,13 @@ Finally, create a new `L.TileLayer` via the factory method `L.OSOpenSpace.tilela
 | Argument | Required? | Description |
 |---|---|---|
 | `apiKey` | Yes | The Ordnance Survey [OpenSpace](http://www.ordnancesurvey.co.uk/business-and-government/products/os-openspace/api/index.html) API key for the website domain name to be used. |
-| `options` | No | An object of layer options to pass to the tilelayer |
 | `apiUrl` | No | The URL of your site associated with the API key, as provided to OSOpenSpace |
+| `options` | No | An object of layer options to pass to the tilelayer |
 
 
 ```javascript
-var openspaceLayer = L.OSOpenSpace.tilelayer("<API Key>", {});
+var options = {};
+var openspaceLayer = L.OSOpenSpace.tilelayer("<API Key>", "<API URL>", options);
 map.addLayer(openspaceLayer);
 ```
 
