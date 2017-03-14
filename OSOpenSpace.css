@@ -1,0 +1,40 @@
+.leaflet-container .os-leaflet-terms-container {
+    display: none;
+    position: relative;
+    margin: 16px;
+	background: white;
+	color: #333;
+	box-shadow: 0 3px 14px rgba(0,0,0,0.4);
+    z-index: 1200;
+    overflow: hidden
+}
+
+.leaflet-container a.os-leaflet-terms-close-button {
+	position: absolute;
+	top: 0;
+	right: 0;
+	padding: 4px 4px 0 0;
+	border: none;
+	text-align: center;
+	width: 18px;
+	height: 14px;
+	font: 16px/14px Tahoma, Verdana, sans-serif;
+	color: #c3c3c3;
+	text-decoration: none;
+	font-weight: bold;
+	background: transparent;
+}
+
+.leaflet-container a.os-leaflet-terms-close-button:hover {
+	color: #999;
+	}
+
+.leaflet-container .os-leaflet-terms {
+    overflow: auto;
+/*	margin: 13px 19px; */
+	line-height: 1.4;
+    padding: 0 10px;
+    margin: 19px 6px 11px;
+    border-bottom: 1px solid #ddd;
+    border-top: 1px solid #ddd;
+}
