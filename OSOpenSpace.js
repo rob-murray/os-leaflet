@@ -60,6 +60,10 @@
    */
   L.OSOpenSpace.TileLayer = L.TileLayer.WMS.extend({
 
+    options: {
+      termsURL: false
+    },
+
     initialize: function (apiKey, apiUrl, options) { // (String, String, Object)
       if (!apiKey) {
         throw new Error('OSOpenSpace layer requires an API Key parameter to function.');
@@ -89,11 +93,15 @@
     },
 
     getAttribution: function () {
+      var href = 'href="#" ';
+      if (this.options.termsURL !== false) {
+        href = 'href="' + this.options.termsURL + '" target="_blank" ';
+      }
       return '&copy; Crown copyright and database rights ' +
         new Date().getFullYear() +
         ' Ordnance Survey. ' +
         '<a class="os-leaflet-terms-link" ' +
-        'href="#" ' +
+        href +
         'title="OS OpenSpace Terms of Use">' +
         'Terms of Use</a>.';
     },
@@ -102,16 +110,21 @@
       if (map.options.attributionControl) {
         map.addControl(new L.OSOpenSpace.LogoControl());
       }
-      L.TileLayer.prototype.onAdd.call(this, map);
 
-      // Add a click handler to a Terms of Use link.
-      // This has be done when adding of layer has finished.
-      L.OSOpenSpace.addTerms(map);
-      map.on('layeradd', function(e) {
-        if (e.layer == this) {         
-          L.OSOpenSpace._termsClickHandler(map);
-       }
-      }, this);
+      if (this.options.termsURL === false) {
+        // If no URL has been provided for the terms-of-use link then use default pop-up licence.
+        // Adds a click handler to a Terms of Use link.
+        // This has be done when adding of layer has finished.
+        L.OSOpenSpace.addTerms(map);
+        map.on('layeradd', function(e) {
+          if (e.layer == this) {         
+            L.OSOpenSpace._termsClickHandler(map);
+          }
+        }, this);
+      }
+
+      // Call parent function to get default behaviour.
+      L.TileLayer.prototype.onAdd.call(this, map);
     },
 
   /**
