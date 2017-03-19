@@ -1,6 +1,6 @@
 {
   "name": "os-leaflet",
-  "version": "0.2.1",
+  "version": "1.0.0",
   "description": "A Leaflet js TileLayer using Ordnance Survey OpenSpace web map service",
   "main": "OSOpenSpace.js",
   "scripts": {
