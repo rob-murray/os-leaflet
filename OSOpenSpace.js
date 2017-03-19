@@ -91,7 +91,7 @@
         new Date().getFullYear() +
         ' Ordnance Survey. ' +
         '<a target="_blank" ' +
-        'href="http://www.ordnancesurvey.co.uk/oswebsite/web-services/os-openspace/developer-agreement.html" ' +
+        'href="https://www.ordnancesurvey.co.uk/web-services/os-openspace/developer-agreement.html" ' +
         'title="OS OpenSpace Terms of Use">' +
         'Terms of Use</a>.';
     },
