@@ -64,7 +64,9 @@
       if (!apiKey) {
         throw new Error('OSOpenSpace layer requires an API Key parameter to function.');
       }
-      apiUrl = typeof apiUrl !== 'undefined' ? apiUrl : 'file:///';
+      if (!apiUrl) {
+        apiUrl = 'file:///';
+      }
 
       L.TileLayer.WMS.prototype.initialize.call(this,
         'https://openspace.ordnancesurvey.co.uk/osmapapi/ts', {
