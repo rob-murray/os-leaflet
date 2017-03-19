@@ -25,6 +25,7 @@
 }(this, function (L) {
   /* This is our namespace for OSOpenSpace on Leaflet js */
   L.OSOpenSpace = L.OSOpenSpace || {};
+  L.OSOpenSpace.VERSION = '1.0.0';
   L.OSOpenSpace.CRS = L.extend(
     new L.Proj.CRS(
       'EPSG:27700',
@@ -59,7 +60,6 @@
    *
    */
   L.OSOpenSpace.TileLayer = L.TileLayer.WMS.extend({
-
     initialize: function (apiKey, apiUrl, options) { // (String, String, Object)
       if (!apiKey) {
         throw new Error('OSOpenSpace layer requires an API Key parameter to function.');
