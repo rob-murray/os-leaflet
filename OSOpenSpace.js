@@ -66,15 +66,16 @@
       }
       apiUrl = typeof apiUrl !== 'undefined' ? apiUrl : 'file:///';
 
+      options = L.extend({
+        crs: L.OSOpenSpace.CRS,
+        maxZoom: 14,
+        minZoom: 0,
+        tileSize: 200
+      }, options);
+
       L.TileLayer.WMS.prototype.initialize.call(this,
-        'https://openspace.ordnancesurvey.co.uk/osmapapi/ts', {
-          crs: L.OSOpenSpace.CRS,
-          maxZoom: 14,
-          minZoom: 0,
-          tileSize: 200
-        },
-        options
-      );
+        'https://openspace.ordnancesurvey.co.uk/osmapapi/ts', 
+        options);
 
       this.wmsParams = {
         KEY: apiKey,
