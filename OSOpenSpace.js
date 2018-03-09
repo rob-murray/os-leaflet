@@ -98,9 +98,17 @@
 
     onAdd: function (map) {
       if (map.options.attributionControl) {
-        map.addControl(new L.OSOpenSpace.LogoControl());
+        this.logoControl = new L.OSOpenSpace.LogoControl();
+        map.addControl(this.logoControl);
       }
       L.TileLayer.prototype.onAdd.call(this, map);
+    },
+
+    onRemove: function (map) {
+      if (this.logoControl) {
+        map.removeControl(this.logoControl);
+      }
+      L.TileLayer.prototype.onRemove.call(this, map);
     },
 
   /**
